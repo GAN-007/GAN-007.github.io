@@ -1337,7 +1337,7 @@
         <div class="container mx-auto px-4 text-center z-10">
             <!-- Profile Image -->
          <div class="profile-image-container mb-8">
-  <img src="main.png" alt="A professional portrait of George Alfred Nyamema" class="profile-image" loading="lazy" width="300" height="300" />
+  <img src="main.jpg" alt="A professional portrait of George Alfred Nyamema" class="profile-image" loading="lazy" width="300" height="300" />
 </div>
 <h1 class="text-5xl md:text-7xl font-bold mb-4 gradient-text glitch" data-text="George Alfred Nyamema">George Alfred Nyamema</h1>
 <div class="text-xl md:text-2xl mb-6 text-white">
@@ -1457,10 +1457,10 @@
                     <span class="px-4 py-2 rounded-full dark-bg text-sm text-white">
                         <i class="fas fa-envelope mr-2 text-pink-400"></i>georgenyamema@gmail.com
                     </span>
-                    <a href="https://linkedin.com/in/george-nyamema-5684181" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full dark-bg text-sm text-white hover:bg-purple-800 transition-colors">
+                    <a href="http://linkedin.com/in/george-nyamema-5684181" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full dark-bg text-sm text-white hover:bg-purple-800 transition-colors">
                         <i class="fab fa-linkedin mr-2 text-pink-400"></i>LinkedIn
                     </a>
-                    <a href="https://5ived.com/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full dark-bg text-sm text-white hover:bg-purple-800 transition-colors">
+                    <a href="http://5ived.com/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full dark-bg text-sm text-white hover:bg-purple-800 transition-colors">
                         <i class="fas fa-globe mr-2 text-pink-400"></i>Website
                     </a>
                 </div>
@@ -2546,74 +2546,6 @@
             
             // Check for reduced motion preference
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            // GitHub API Integration - Fetch public repositories
-            const fetchGitHubRepositories = async () => {
-                try {
-                    const username = "GAN-007";
-                    const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100&type=public`);
-                    if (!response.ok) {
-                        console.error("GitHub API error:", response.status);
-                        return [];
-                    }
-                    const repos = await response.json();
-                    return repos.filter(repo => !repo.fork && repo.description);
-                } catch (error) {
-                    console.error("Error fetching GitHub repositories:", error);
-                    return [];
-                }
-            };
-            
-            const getRepoIcon = (language) => {
-                const iconMap = {
-                    "Python": "fab fa-python",
-                    "JavaScript": "fab fa-js-square",
-                    "TypeScript": "fab fa-js-square",
-                    "React": "fab fa-react",
-                    "Vue": "fab fa-vuejs",
-                    "Java": "fab fa-java",
-                    "PHP": "fab fa-php",
-                    "Go": "fas fa-code",
-                    "Rust": "fas fa-code",
-                    "C++": "fas fa-code",
-                    "C#": "fas fa-code",
-                    "HTML": "fab fa-html5",
-                    "CSS": "fab fa-css3-alt"
-                };
-                return iconMap[language] || "fas fa-code";
-            };
-            
-            const populateShowcaseFromGitHub = async () => {
-                const repos = await fetchGitHubRepositories();
-                const showcaseGrid = document.querySelector(".showcase-grid");
-                if (!showcaseGrid || repos.length === 0) return;
-                repos.slice(0, 12).forEach((repo) => {
-                    const languages = repo.language ? [repo.language] : ["Code"];
-                    const topics = repo.topics && repo.topics.length > 0 ? repo.topics.slice(0, 2) : [];
-                    const tags = [...languages, ...topics].slice(0, 3);
-                    const showcaseItem = document.createElement("div");
-                    showcaseItem.className = "showcase-item";
-                    showcaseItem.setAttribute("data-category", "github");
-                    showcaseItem.setAttribute("data-id", `github-${repo.name}`);
-                    const icon = getRepoIcon(repo.language);
-                    showcaseItem.innerHTML = `
-                        <div class="bg-gradient-to-br from-gray-900 to-gray-800 absolute inset-0 flex items-center justify-center">
-                            <i class="${icon} text-6xl text-white opacity-20"></i>
-                        </div>
-                        <div class="showcase-overlay">
-                            <div class="showcase-tags">
-                                ${tags.map(tag => `<span class="showcase-tag">${tag}</span>`).join("")}
-                            </div>
-                            <h3 class="showcase-title">${repo.name.replace(/-/g, " ")}</h3>
-                            <p class="text-sm text-gray-300 mb-3 line-clamp-2">${repo.description || "Repository"}</p>
-                            <div class="flex gap-2 justify-center">
-                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="btn py-1 px-3 text-sm">View Repo</a>
-                            </div>
-                        </div>
-                    `;
-                    showcaseGrid.appendChild(showcaseItem);
-                });
-            };
-
             
             // Initialize Three.js Background
             const initThreeJS = () => {
@@ -3936,17 +3868,17 @@ print(result)`
                             {
                                 icon: "fab fa-github",
                                 text: "View on GitHub",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             },
                             {
                                 icon: "fas fa-play-circle",
                                 text: "Live Demo",
-                                url: "https://github.com/GAN-007/"
+                                url: "https://example.com/"
                             },
                             {
                                 icon: "fas fa-file-alt",
                                 text: "Documentation",
-                                url: "https://github.com/GAN-007/docs"
+                                url: "https://example.com/docs"
                             }
                         ]
                     },
@@ -4077,12 +4009,12 @@ export default FinancialDashboard;`
                             {
                                 icon: "fab fa-github",
                                 text: "Source Code",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             },
                             {
                                 icon: "fas fa-external-link-alt",
                                 text: "Live Demo",
-                                url: "https://github.com/GAN-007/"
+                                url: "https://example.com/"
                             }
                         ]
                     },
@@ -4242,7 +4174,7 @@ def train_model(X_train, y_train, X_test, y_test):
                             {
                                 icon: "fab fa-github",
                                 text: "GitHub Repository",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             },
                             {
                                 icon: "fas fa-file-code",
@@ -4299,7 +4231,7 @@ def train_model(X_train, y_train, X_test, y_test):
                             {
                                 icon: "fas fa-globe",
                                 text: "Read Full Article",
-                                url: "https://github.com/GAN-007/blog/blockchain-finance"
+                                url: "https://example.com/blog/blockchain-finance"
                             },
                             {
                                 icon: "fas fa-download",
@@ -4505,12 +4437,12 @@ class PatientManager {
                             {
                                 icon: "fas fa-desktop",
                                 text: "Live Demo",
-                                url: "https://github.com/GAN-007/demo"
+                                url: "https://example.com/demo"
                             },
                             {
                                 icon: "fas fa-file-alt",
                                 text: "Case Study",
-                                url: "https://github.com/GAN-007/case-study"
+                                url: "https://example.com/case-study"
                             }
                         ]
                     },
@@ -4541,12 +4473,12 @@ class PatientManager {
                             {
                                 icon: "fab fa-github",
                                 text: "GitHub Repo",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             },
                             {
                                 icon: "fas fa-video",
                                 text: "Watch Full Demo",
-                                url: "https://github.com/GAN-007/video"
+                                url: "https://example.com/video"
                             },
                             {
                                 icon: "fas fa-file-pdf",
@@ -4754,7 +4686,7 @@ export const useFetch = (url, options = {}) => {
                             {
                                 icon: "fab fa-github",
                                 text: "Source Code",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             }
                         ]
                     },
@@ -4836,7 +4768,7 @@ export const useFetch = (url, options = {}) => {
                             {
                                 icon: "fas fa-book",
                                 text: "Read Full Article",
-                                url: "https://github.com/GAN-007/blog/llm-applications"
+                                url: "https://example.com/blog/llm-applications"
                             },
                             {
                                 icon: "fas fa-download",
@@ -4987,7 +4919,6 @@ export const useFetch = (url, options = {}) => {
                 initSmoothScrolling();
                 initContactForm();
                 initShowcase(); // Initialize the Work Showcase section
-                populateShowcaseFromGitHub(); // Populate with actual GitHub repositories
                 
                 // Initialize 3D background only for desktop when animations are enabled
                 if (!prefersReducedMotion) {
@@ -5054,7 +4985,7 @@ export const useFetch = (url, options = {}) => {
                     "@context": "https://schema.org/",
                     "@type": "Person",
                     "name": "George Alfred Nyamema",
-                    "url": "https://5ived.com/",
+                    "url": "http://5ived.com/",
                     "image": "",
                     "jobTitle": "Full Stack Developer & AI Engineering Executive",
                     "worksFor": {
@@ -5062,7 +4993,7 @@ export const useFetch = (url, options = {}) => {
                         "name": "Creativebits LLC"
                     },
                     "sameAs": [
-                        "https://linkedin.com/in/george-nyamema-5684181"
+                        "http://linkedin.com/in/george-nyamema-5684181"
                     ],
                     "description": "AI & Full Stack Engineering Executive with expertise in artificial intelligence, cloud computing, machine learning, cybersecurity, and blockchain integrations.",
                     "knowsAbout": [
