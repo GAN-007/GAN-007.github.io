@@ -874,11 +874,13 @@
             margin: 0 auto;
             border: 3px solid transparent;
             background: linear-gradient(45deg, var(--aqua), var(--pink), var(--purple)) border-box;
-            -webkit-mask: 
+            /* Fixed mask issue that was hiding the image */
+            /* -webkit-mask: 
                 linear-gradient(#fff 0 0) padding-box, 
                 linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
-            mask-composite: exclude;
+            mask-composite: exclude; */
+            border: 4px solid var(--purple);
             box-shadow: 0 0 30px rgba(153, 0, 255, 0.3);
         }
         
@@ -1457,10 +1459,10 @@
                     <span class="px-4 py-2 rounded-full dark-bg text-sm text-white">
                         <i class="fas fa-envelope mr-2 text-pink-400"></i>georgenyamema@gmail.com
                     </span>
-                    <a href="https://linkedin.com/in/george-nyamema-5684181" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full dark-bg text-sm text-white hover:bg-purple-800 transition-colors">
+                    <a href="http://linkedin.com/in/george-nyamema-5684181" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full dark-bg text-sm text-white hover:bg-purple-800 transition-colors">
                         <i class="fab fa-linkedin mr-2 text-pink-400"></i>LinkedIn
                     </a>
-                    <a href="https://5ived.com/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full dark-bg text-sm text-white hover:bg-purple-800 transition-colors">
+                    <a href="http://5ived.com/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full dark-bg text-sm text-white hover:bg-purple-800 transition-colors">
                         <i class="fas fa-globe mr-2 text-pink-400"></i>Website
                     </a>
                 </div>
@@ -2586,15 +2588,35 @@
                 const repos = await fetchGitHubRepositories();
                 const showcaseGrid = document.querySelector(".showcase-grid");
                 if (!showcaseGrid || repos.length === 0) return;
-                repos.slice(0, 12).forEach((repo) => {
+                
+                repos.forEach((repo) => {
                     const languages = repo.language ? [repo.language] : ["Code"];
-                    const topics = repo.topics && repo.topics.length > 0 ? repo.topics.slice(0, 2) : [];
+                    const topics = repo.topics || [];
                     const tags = [...languages, ...topics].slice(0, 3);
+                    
+                    // Determine category based on language and topics
+                    let categories = ["all", "github"];
+                    const lang = (repo.language || "").toLowerCase();
+                    const desc = (repo.description || "").toLowerCase();
+                    const topicStr = topics.join(" ").toLowerCase();
+                    
+                    if (lang === "javascript" || lang === "typescript" || lang === "html" || lang === "css" || topicStr.includes("web") || desc.includes("web")) {
+                        categories.push("web");
+                    }
+                    if (topicStr.includes("ai") || topicStr.includes("ml") || topicStr.includes("llm") || desc.includes("ai") || desc.includes("intelligence") || desc.includes("learning")) {
+                        categories.push("ai");
+                    }
+                    if (lang === "python" || lang === "java" || lang === "php" || topicStr.includes("code") || desc.includes("code")) {
+                        categories.push("code");
+                    }
+                    
                     const showcaseItem = document.createElement("div");
                     showcaseItem.className = "showcase-item";
-                    showcaseItem.setAttribute("data-category", "github");
+                    showcaseItem.setAttribute("data-category", categories.join(" "));
                     showcaseItem.setAttribute("data-id", `github-${repo.name}`);
+                    
                     const icon = getRepoIcon(repo.language);
+                    
                     showcaseItem.innerHTML = `
                         <div class="bg-gradient-to-br from-gray-900 to-gray-800 absolute inset-0 flex items-center justify-center">
                             <i class="${icon} text-6xl text-white opacity-20"></i>
@@ -2607,10 +2629,67 @@
                             <p class="text-sm text-gray-300 mb-3 line-clamp-2">${repo.description || "Repository"}</p>
                             <div class="flex gap-2 justify-center">
                                 <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="btn py-1 px-3 text-sm">View Repo</a>
+                                <button class="btn py-1 px-3 text-sm view-details" data-id="github-${repo.name}">Details</button>
                             </div>
                         </div>
                     `;
+                    
+                    // Add to projectData for modal functionality
+                    projectData[`github-${repo.name}`] = {
+                        title: repo.name.replace(/-/g, " "),
+                        tags: tags,
+                        description: `<p>${repo.description || "No description available."}</p><p class="mt-4"><strong>Stars:</strong> ${repo.stargazers_count} | <strong>Forks:</strong> ${repo.forks_count} | <strong>Language:</strong> ${repo.language || "N/A"}</p>`,
+                        mediaType: "image",
+                        mediaContent: `<div class="bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center h-full rounded-lg"><i class="${icon} text-8xl text-white opacity-30"></i></div>`,
+                        links: [
+                            { icon: "fab fa-github", text: "View on GitHub", url: repo.html_url }
+                        ]
+                    };
+                    
                     showcaseGrid.appendChild(showcaseItem);
+                });
+                
+                // Re-initialize modal buttons for new items
+                const newViewDetailButtons = showcaseGrid.querySelectorAll('.view-details');
+                newViewDetailButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const projectId = button.getAttribute('data-id');
+                        const project = projectData[projectId];
+                        if (!project) return;
+                        
+                        const modal = document.getElementById('showcase-modal');
+                        const modalTitle = document.getElementById('modal-title');
+                        const modalTags = document.getElementById('modal-tags');
+                        const modalMedia = document.getElementById('modal-media');
+                        const modalDescription = document.getElementById('modal-description');
+                        const modalLinks = document.getElementById('modal-links');
+                        const modalCodeSnippet = document.getElementById('modal-code-snippet');
+                        
+                        modalTitle.textContent = project.title;
+                        modalTags.innerHTML = '';
+                        project.tags.forEach(tag => {
+                            const tagEl = document.createElement('span');
+                            tagEl.className = 'showcase-tag';
+                            tagEl.textContent = tag;
+                            modalTags.appendChild(tagEl);
+                        });
+                        modalMedia.innerHTML = project.mediaContent;
+                        modalDescription.innerHTML = project.description;
+                        modalCodeSnippet.style.display = 'none';
+                        
+                        modalLinks.innerHTML = '';
+                        project.links.forEach(link => {
+                            const linkEl = document.createElement('a');
+                            linkEl.href = link.url;
+                            linkEl.target = '_blank';
+                            linkEl.className = 'btn flex items-center gap-2';
+                            linkEl.innerHTML = `<i class="${link.icon}"></i>${link.text}`;
+                            modalLinks.appendChild(linkEl);
+                        });
+                        
+                        modal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    });
                 });
             };
 
@@ -3936,17 +4015,17 @@ print(result)`
                             {
                                 icon: "fab fa-github",
                                 text: "View on GitHub",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             },
                             {
                                 icon: "fas fa-play-circle",
                                 text: "Live Demo",
-                                url: "https://github.com/GAN-007/"
+                                url: "https://example.com/"
                             },
                             {
                                 icon: "fas fa-file-alt",
                                 text: "Documentation",
-                                url: "https://github.com/GAN-007/docs"
+                                url: "https://example.com/docs"
                             }
                         ]
                     },
@@ -4077,12 +4156,12 @@ export default FinancialDashboard;`
                             {
                                 icon: "fab fa-github",
                                 text: "Source Code",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             },
                             {
                                 icon: "fas fa-external-link-alt",
                                 text: "Live Demo",
-                                url: "https://github.com/GAN-007/"
+                                url: "https://example.com/"
                             }
                         ]
                     },
@@ -4242,7 +4321,7 @@ def train_model(X_train, y_train, X_test, y_test):
                             {
                                 icon: "fab fa-github",
                                 text: "GitHub Repository",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             },
                             {
                                 icon: "fas fa-file-code",
@@ -4299,7 +4378,7 @@ def train_model(X_train, y_train, X_test, y_test):
                             {
                                 icon: "fas fa-globe",
                                 text: "Read Full Article",
-                                url: "https://github.com/GAN-007/blog/blockchain-finance"
+                                url: "https://example.com/blog/blockchain-finance"
                             },
                             {
                                 icon: "fas fa-download",
@@ -4505,12 +4584,12 @@ class PatientManager {
                             {
                                 icon: "fas fa-desktop",
                                 text: "Live Demo",
-                                url: "https://github.com/GAN-007/demo"
+                                url: "https://example.com/demo"
                             },
                             {
                                 icon: "fas fa-file-alt",
                                 text: "Case Study",
-                                url: "https://github.com/GAN-007/case-study"
+                                url: "https://example.com/case-study"
                             }
                         ]
                     },
@@ -4541,12 +4620,12 @@ class PatientManager {
                             {
                                 icon: "fab fa-github",
                                 text: "GitHub Repo",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             },
                             {
                                 icon: "fas fa-video",
                                 text: "Watch Full Demo",
-                                url: "https://github.com/GAN-007/video"
+                                url: "https://example.com/video"
                             },
                             {
                                 icon: "fas fa-file-pdf",
@@ -4754,7 +4833,7 @@ export const useFetch = (url, options = {}) => {
                             {
                                 icon: "fab fa-github",
                                 text: "Source Code",
-                                url: "https://github.com/GAN-007"
+                                url: "https://github.com/"
                             }
                         ]
                     },
@@ -4836,7 +4915,7 @@ export const useFetch = (url, options = {}) => {
                             {
                                 icon: "fas fa-book",
                                 text: "Read Full Article",
-                                url: "https://github.com/GAN-007/blog/llm-applications"
+                                url: "https://example.com/blog/llm-applications"
                             },
                             {
                                 icon: "fas fa-download",
@@ -5054,7 +5133,7 @@ export const useFetch = (url, options = {}) => {
                     "@context": "https://schema.org/",
                     "@type": "Person",
                     "name": "George Alfred Nyamema",
-                    "url": "https://5ived.com/",
+                    "url": "http://5ived.com/",
                     "image": "",
                     "jobTitle": "Full Stack Developer & AI Engineering Executive",
                     "worksFor": {
@@ -5062,7 +5141,7 @@ export const useFetch = (url, options = {}) => {
                         "name": "Creativebits LLC"
                     },
                     "sameAs": [
-                        "https://linkedin.com/in/george-nyamema-5684181"
+                        "http://linkedin.com/in/george-nyamema-5684181"
                     ],
                     "description": "AI & Full Stack Engineering Executive with expertise in artificial intelligence, cloud computing, machine learning, cybersecurity, and blockchain integrations.",
                     "knowsAbout": [
