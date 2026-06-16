@@ -4,6 +4,15 @@ function portfolioAnswer(text){
  if(q.includes('skill'))return 'Python, Django, Flask, PHP, JavaScript, React, SQL, PostgreSQL, AI automation, dashboards and fintech systems.';
  return portfolioRepos.join('\n');
 }
+function addMessage(text,kind){
+ const box=document.querySelector('#messages');
+ if(!box)return;
+ const item=document.createElement('div');
+ item.className='msg '+(kind||'bot');
+ item.textContent=text;
+ box.appendChild(item);
+ box.scrollTop=box.scrollHeight;
+}
 document.addEventListener('DOMContentLoaded',()=>{
  const year=document.querySelector('#year');
  if(year)year.textContent=new Date().getFullYear();
