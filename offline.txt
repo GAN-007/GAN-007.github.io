@@ -1,0 +1,4 @@
+index.html
+assets/css/styles.css
+assets/js/app.mjs
+main.png
