@@ -1,28 +1,14 @@
-const portfolioRepos=['github-ai-genius','MAI-UI','GANTECH-HRM','openai-nextjs-starter','ai-document-assistant','MPESA'];
-function portfolioAnswer(text){
- const q=text.toLowerCase();
- if(q.includes('skill'))return 'Python, Django, Flask, PHP, JavaScript, React, SQL, PostgreSQL, AI automation, dashboards and fintech systems.';
- return portfolioRepos.join('\n');
-}
-function addMessage(text,kind){
- const box=document.querySelector('#messages');
- if(!box)return;
- const item=document.createElement('div');
- item.className='msg '+(kind||'bot');
- item.textContent=text;
- box.appendChild(item);
- box.scrollTop=box.scrollHeight;
-}
-document.addEventListener('DOMContentLoaded',()=>{
- const year=document.querySelector('#year');
- if(year)year.textContent=new Date().getFullYear();
- const panel=document.querySelector('#aiPanel');
- const toggle=document.querySelector('#aiToggle');
- const close=document.querySelector('#aiClose');
- const form=document.querySelector('#aiForm');
- const input=document.querySelector('#aiInput');
- if(toggle&&panel)toggle.onclick=()=>{panel.classList.toggle('open');panel.setAttribute('aria-hidden',panel.classList.contains('open')?'false':'true');};
- if(close&&panel)close.onclick=()=>panel.classList.remove('open');
- if(form&&input)form.onsubmit=e=>{e.preventDefault();const q=input.value.trim();if(!q)return;addMessage(q,'user');input.value='';addMessage(portfolioAnswer(q),'bot');};
- console.info('George Alfred Nyamema production portfolio loaded',portfolioRepos);
-});
+const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
+const featured=[
+['github-ai-genius','AI/Developer Tooling','Go-based original repository in my public GitHub portfolio.'],['MPESA','FinTech / Payments','M-Pesa integration work and payment engineering.'],['ai-document-assistant','AI / Documents','AI-assisted document workflow project.'],['GANTECH-HRM','Enterprise / HR','Human-resource management platform work.'],['PAWA-Q-A-AI','AI / Q&A','AI question-and-answer platform.'],['FREEPBX-AI-','AI / Telecom','AI-assisted telephony and FreePBX experimentation.']];
+function init(){ $('#year').textContent=new Date().getFullYear(); const menu=$('#menu'),mobile=$('#mobile'); menu.onclick=()=>mobile.classList.toggle('open'); $$('#mobile a').forEach(a=>a.onclick=()=>mobile.classList.remove('open'));
+ const prog=$('.progress i'); addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%'; $('#header').style.borderBottomColor=scrollY>20?'#17304f':'transparent'},{passive:true});
+ const rev=$$('.reveal'),io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.08}); rev.forEach(x=>io.observe(x));
+ const sections=$$('main section[id]'),links=$$('.nav nav a'); new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-42% 0px -52%'}).observe?.(sections[0]); sections.slice(1).forEach(s=>new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-42% 0px -52%'}).observe(s));
+ $$('[data-count]').forEach(el=>{let done=false;new IntersectionObserver(es=>{if(done||!es[0].isIntersecting)return;done=true;const n=+el.dataset.count,t=performance.now();requestAnimationFrame(function f(now){let p=Math.min(1,(now-t)/900);el.textContent=Math.round(n*p);if(p<1)requestAnimationFrame(f)})}).observe(el)});
+ type(); renderFeatured(); loadRepos(); $('#contactForm').onsubmit=e=>{e.preventDefault();const d=new FormData(e.currentTarget),sub=encodeURIComponent(`Portfolio enquiry from ${d.get('name')}`),body=encodeURIComponent(`${d.get('message')}\n\nFrom: ${d.get('name')} <${d.get('email')}>`);location.href=`mailto:georgenyamema@gmail.com?subject=${sub}&body=${body}`}; }
+function type(){const words=['full-stack systems','fintech analytics','data engineering','AI-assisted workflows','technical leadership','automation with impact'];let i=0,j=0,del=false;const el=$('#typed');setInterval(()=>{let w=words[i];j+=del?-1:1;el.textContent=w.slice(0,j);if(!del&&j===w.length){del=true;return}if(del&&j===0){del=false;i=(i+1)%words.length}},90)}
+function renderFeatured(){ $('#featured').innerHTML=featured.map(([n,t,d])=>`<article><div class="project-top"><span class="tag">${t}</span><span>↗</span></div><h3>${n}</h3><p>${d}</p><a class="project-link" href="https://github.com/GAN-007/${n}" target="_blank">View repository ↗</a></article>`).join('') }
+let repoData=[];async function loadRepos(){const box=$('#repos');try{const r=await fetch('https://api.github.com/users/GAN-007/repos?per_page=100&sort=updated');if(!r.ok)throw 0;repoData=await r.json();renderRepos('all')}catch{box.innerHTML='<p class="muted">GitHub live data is temporarily unavailable. Use the featured repositories above or visit github.com/GAN-007.</p>'}$$('.filter').forEach(b=>b.onclick=()=>{$$('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderRepos(b.dataset.filter)})}
+function renderRepos(f){const data=repoData.filter(r=>f==='all'||(f==='fork'?r.fork:!r.fork)).slice(0,18);$('#repos').innerHTML=data.map(r=>`<article><div class="repo-top"><span class="tag">${r.fork?'Fork':'Original'}</span><small>${r.language||'Mixed'}</small></div><h3>${r.name}</h3><p>${r.description||'Public GitHub repository.'}</p><a class="project-link" href="${r.html_url}" target="_blank">GitHub ↗</a></article>`).join('')||'<p class="muted">No repositories in this filter.</p>'}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
