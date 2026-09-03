@@ -1,8 +1,10 @@
-const CACHE = 'gan-portfolio-v2';
+const CACHE = 'gan-portfolio-v3';
 const CORE = [
   './',
   './index.html',
   './cv.html',
+  './thank-you.html',
+  './privacy.html',
   './assets/css/styles.css',
   './assets/js/app.mjs',
   './assets/js/repo-cache.mjs',

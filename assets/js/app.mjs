@@ -212,19 +212,18 @@ async function loadRepos() {
 }
 
 function initContactForm() {
-  const form = $('#contactForm');
-  const status = $('#formStatus');
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-    const data = new FormData(form);
-    const name = String(data.get('name')).trim();
-    const email = String(data.get('email')).trim();
-    const message = String(data.get('message')).trim();
-    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-    const body = encodeURIComponent(`Hello George,\n\n${message}\n\nFrom: ${name}\nEmail: ${email}\n\nSent from gan-007.github.io`);
-    status.textContent = 'Opening your email app…';
-    location.href = `mailto:georgenyamema@gmail.com?subject=${subject}&body=${body}`;
+  const form = $("#contactForm");
+  const status = $("#formStatus");
+  form.addEventListener("submit", event => {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      form.reportValidity();
+      return;
+    }
+    const submit = $("button[type=\"submit\"]", form);
+    submit.disabled = true;
+    submit.textContent = "Sending…";
+    status.textContent = "Securely submitting your message…";
   });
 }
 

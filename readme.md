@@ -8,32 +8,43 @@ Production GitHub Pages portfolio for George Alfred Nyamema (GAN-007), covering 
 - CV-driven skills, experience, education, credentials and contact content
 - Live GitHub repository explorer with All, Originals and Forks filters
 - Safe curated repository fallback when GitHub is unavailable or rate-limited
-- Client-side, CV-grounded portfolio assistant
-- Contact form that validates locally and opens a prepared email (no visitor data is stored)
+- Private, client-side CV assistant; questions never leave the browser
+- Hosted contact delivery through FormSubmit, with reCAPTCHA, honeypot protection, a success page and direct-email fallback
 - Downloadable PDF CV plus printable web CV
 - Installable PWA with offline caching
+- Privacy-oriented GoatCounter page and conversion analytics
 - Canonical metadata, social cards, robots policy and XML sitemap
+- Dependency-free verification script enforced by GitHub Actions on pushes and pull requests
 
 ## Project structure
 
 - `index.html` — portfolio content and semantic page shell
 - `cv.html` — accessible printable web CV
+- `privacy.html` and `thank-you.html` — privacy disclosure and contact confirmation
 - `assets/css/styles.css` — responsive visual system and component styling
 - `assets/js/app.mjs` — navigation, animation, repositories, contact, assistant and service-worker behavior
 - `assets/js/repo-cache.mjs` — offline/rate-limit repository fallback
 - `assets/docs/George_Alfred_Nyamema_CV.pdf` — downloadable CV
 - `site.webmanifest` and `sw.js` — install and offline support
 - `robots.txt` and `sitemap.xml` — crawler metadata
+- `scripts/verify.mjs` — dependency-free structural, syntax and asset checks
+- `.github/workflows/ci.yml` — continuous integration workflow
 
-## Local run
+## Provider activation
 
-Serve the repository root through any static web server. For example:
+The integrations contain no secret keys in the public repository.
+
+1. FormSubmit uses `georgenyamema@gmail.com`. The first real/test submission sends an activation email to that address; approve it once to enable delivery.
+2. GoatCounter uses the site code `gan-007`. Create or claim that site code in GoatCounter so the included `count.v5.js` integration can store pageviews and the `contact-submit` / `cv-download` conversions.
+
+## Local run and verification
 
 ```bash
 python3 -m http.server 8000
+node scripts/verify.mjs
 ```
 
-Then open `http://localhost:8000`. Service workers do not run directly from `file://` URLs.
+Open `http://localhost:8000`. Service workers and provider analytics intentionally do not run from `file://`; GoatCounter also filters localhost by default.
 
 ## Contact
 
