@@ -1,6 +1,7 @@
 import { access, readFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { repoCache } from '../assets/js/repo-cache.mjs';
 
 const requiredFiles = [
   'index.html',
@@ -26,6 +27,7 @@ for (const file of ['assets/js/app.mjs', 'assets/js/repo-cache.mjs', 'sw.js']) {
 }
 
 const index = await readFile('index.html', 'utf8');
+const app = await readFile('assets/js/app.mjs', 'utf8');
 const cv = await readFile('cv.html', 'utf8');
 const manifest = JSON.parse(await readFile('site.webmanifest', 'utf8'));
 const sitemap = await readFile('sitemap.xml', 'utf8');
@@ -43,6 +45,8 @@ const assertions = [
   [manifest.icons?.length >= 2, 'PWA icons are incomplete'],
   [sitemap.includes('https://gan-007.github.io/'), 'Sitemap homepage URL is missing'],
   [serviceWorker.includes('thank-you.html'), 'Thank-you page is not cached'],
+  [repoCache.every(repo => repo.private === false && repo.visibility === 'public'), 'Repository cache contains an entry that is not explicitly public'],
+  [app.includes('api.github.com/users/GAN-007/repos') && app.includes('filter(isPublicRepo)'), 'Public-only GitHub repository filtering is missing'],
   [pdf.subarray(0, 5).toString() === '%PDF-', 'CV download is not a PDF']
 ];
 

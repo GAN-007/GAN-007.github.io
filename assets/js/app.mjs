@@ -28,6 +28,12 @@ const assistantKnowledge = {
 
 let repoData = [];
 
+function isPublicRepo(repo) {
+  return repo?.private === false && repo.visibility === 'public';
+}
+
+const cachedPublicNames = new Set(repoCache.filter(isPublicRepo).map(repo => repo.name));
+
 function create(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -157,7 +163,7 @@ function projectCard(name, tag, description) {
 
 function renderFeatured() {
   const box = $('#featured');
-  featured.forEach(item => box.append(projectCard(...item)));
+  featured.filter(([name]) => cachedPublicNames.has(name)).forEach(item => box.append(projectCard(...item)));
 }
 
 function repoCard(repo) {
@@ -170,7 +176,7 @@ function repoCard(repo) {
 
 function renderRepos(filter = 'all') {
   const box = $('#repos');
-  const filtered = repoData.filter(repo => filter === 'all' || (filter === 'fork' ? repo.fork : !repo.fork)).slice(0, 18);
+  const filtered = repoData.filter(isPublicRepo).filter(repo => filter === 'all' || (filter === 'fork' ? repo.fork : !repo.fork)).slice(0, 18);
   box.replaceChildren();
   if (!filtered.length) {
     box.append(create('p', 'muted', 'No repositories in this filter.'));
@@ -193,10 +199,10 @@ async function loadRepos() {
     clearTimeout(timeout);
     if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
     const data = await response.json();
-    repoData = data.map(({ name, description, html_url, language, fork }) => ({ name, description, html_url, language, fork }));
+    repoData = data.map(({ name, description, html_url, language, fork, private: isPrivate, visibility }) => ({ name, description, html_url, language, fork, private: isPrivate, visibility })).filter(isPublicRepo);
     status.textContent = `${repoData.length} public repositories loaded from GitHub.`;
   } catch {
-    repoData = repoCache;
+    repoData = repoCache.filter(isPublicRepo);
     status.textContent = 'Live GitHub data is unavailable; showing a curated cached selection.';
   }
   renderRepos('all');
