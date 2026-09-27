@@ -1,4 +1,5 @@
 import { repoCache } from './repo-cache.mjs';
+import { classifyPortfolioQuestion, portfolioTopic } from './system-one.mjs';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -233,7 +234,8 @@ function initContactForm() {
   });
 }
 
-function portfolioAnswer(question) {
+function portfolioAnswer(question, topic = null) {
+  if (topic && assistantKnowledge[topic]) return assistantKnowledge[topic];
   const q = question.toLowerCase();
   if (/sevi|current|fintech/.test(q)) return assistantKnowledge.sevi;
   if (/skill|stack|python|django|react|sql|cloud|devops|security|technology/.test(q)) return assistantKnowledge.skills;
@@ -265,17 +267,25 @@ function initAssistant() {
     messages.append(create('p', `msg ${kind}`, text));
     messages.scrollTop = messages.scrollHeight;
   };
-  const ask = question => {
+  const ask = async question => {
     const clean = question.trim();
     if (!clean) return;
     addMessage(clean, 'user');
-    addMessage(portfolioAnswer(clean), 'bot');
     input.value = '';
+
+    const decision = await classifyPortfolioQuestion(clean);
+    const injectionProbability = Number(decision?.answers?.prompt_injection?.noul ?? 0);
+    if (injectionProbability >= 0.8) {
+      addMessage('I only answer from the public portfolio content about skills, experience, projects, education, credentials and contact information.', 'bot');
+      return;
+    }
+
+    addMessage(portfolioAnswer(clean, portfolioTopic(decision)), 'bot');
   };
   toggle.addEventListener('click', () => setOpen(panel.hidden));
   close.addEventListener('click', () => setOpen(false));
-  form.addEventListener('submit', event => { event.preventDefault(); ask(input.value); });
-  $$('.assistant-prompts button').forEach(button => button.addEventListener('click', () => ask(button.dataset.question)));
+  form.addEventListener('submit', event => { event.preventDefault(); void ask(input.value); });
+  $('.assistant-prompts button').forEach(button => button.addEventListener('click', () => { void ask(button.dataset.question); }));
   addEventListener('keydown', event => { if (event.key === 'Escape' && !panel.hidden) setOpen(false); });
 }
 
