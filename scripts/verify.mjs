@@ -9,6 +9,7 @@ const requiredFiles = [
   'assets/css/styles.css',
   'assets/js/app.mjs',
   'assets/js/repo-cache.mjs',
+  'assets/js/system-one.mjs',
   'assets/docs/George_Alfred_Nyamema_CV.pdf',
   'assets/images/george-nyamema-hero.webp',
   'assets/images/icon-192.png',
@@ -22,7 +23,7 @@ const requiredFiles = [
 
 for (const file of requiredFiles) await access(file, constants.R_OK);
 
-for (const file of ['assets/js/app.mjs', 'assets/js/repo-cache.mjs', 'sw.js']) {
+for (const file of ['assets/js/app.mjs', 'assets/js/repo-cache.mjs', 'assets/js/system-one.mjs', 'sw.js']) {
   execFileSync(process.execPath, ['--check', file], { stdio: 'inherit' });
 }
 
@@ -39,6 +40,7 @@ const assertions = [
   [!index.includes('<h3>Web Development</h3>'), 'Legacy Web Development service heading remains'],
   [index.includes('https://formsubmit.co/georgenyamema@gmail.com'), 'Contact endpoint is missing'],
   [index.includes('id="assistantPanel"'), 'Portfolio assistant is missing'],
+  [index.includes('name="system-one-endpoint"'), 'System-One endpoint metadata is missing'],
   [index.includes('site.webmanifest'), 'Manifest link is missing'],
   [index.includes('assets/docs/George_Alfred_Nyamema_CV.pdf'), 'CV link is missing'],
   [cv.includes('George Alfred Nyamema'), 'Web CV content is missing'],
