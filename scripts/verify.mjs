@@ -47,6 +47,9 @@ const assertions = [
   [manifest.icons?.length >= 2, 'PWA icons are incomplete'],
   [sitemap.includes('https://gan-007.github.io/'), 'Sitemap homepage URL is missing'],
   [serviceWorker.includes('thank-you.html'), 'Thank-you page is not cached'],
+  [serviceWorker.includes('assets/js/system-one.mjs'), 'System-One module is not cached for offline startup'],
+  [index.includes('Do not enter private or secret information'), 'Assistant System-One privacy disclosure is missing'],
+  [app.includes("$('.assistant-prompts button').forEach"), 'Assistant prompt buttons are not initialized as a collection'],
   [repoCache.every(repo => repo.private === false && repo.visibility === 'public'), 'Repository cache contains an entry that is not explicitly public'],
   [app.includes('api.github.com/users/GAN-007/repos') && app.includes('filter(isPublicRepo)'), 'Public-only GitHub repository filtering is missing'],
   [pdf.subarray(0, 5).toString() === '%PDF-', 'CV download is not a PDF']
