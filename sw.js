@@ -1,4 +1,4 @@
-const CACHE = 'gan-portfolio-v3';
+const CACHE = 'gan-portfolio-v4';
 const CORE = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const CORE = [
   './assets/css/styles.css',
   './assets/js/app.mjs',
   './assets/js/repo-cache.mjs',
+  './assets/js/system-one.mjs',
   './assets/images/george-nyamema-hero.webp',
   './assets/docs/George_Alfred_Nyamema_CV.pdf',
   './main.png',
