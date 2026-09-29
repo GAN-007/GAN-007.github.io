@@ -264,23 +264,26 @@ function initAssistant() {
     else toggle.focus();
   };
   const addMessage = (text, kind) => {
-    messages.append(create('p', `msg ${kind}`, text));
+    const message = create('p', `msg ${kind}`, text);
+    messages.append(message);
     messages.scrollTop = messages.scrollHeight;
+    return message;
   };
   const ask = async question => {
     const clean = question.trim();
     if (!clean) return;
     addMessage(clean, 'user');
+    const reply = addMessage('Checking the public portfolio…', 'bot');
     input.value = '';
 
     const decision = await classifyPortfolioQuestion(clean);
     const injectionProbability = Number(decision?.answers?.prompt_injection?.noul ?? 0);
     if (injectionProbability >= 0.8) {
-      addMessage('I only answer from the public portfolio content about skills, experience, projects, education, credentials and contact information.', 'bot');
+      reply.textContent = 'I only answer from the public portfolio content about skills, experience, projects, education, credentials and contact information.';
       return;
     }
 
-    addMessage(portfolioAnswer(clean, portfolioTopic(decision)), 'bot');
+    reply.textContent = portfolioAnswer(clean, portfolioTopic(decision));
   };
   toggle.addEventListener('click', () => setOpen(panel.hidden));
   close.addEventListener('click', () => setOpen(false));
