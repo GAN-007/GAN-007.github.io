@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="170" viewBox="0 0 1200 170" role="img" aria-labelledby="t d">
+<title id="t">GAN technology stack animated vector</title><desc id="d">Animated glossy technology capsules.</desc>
+<defs>
+  <linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06152a"/><stop offset="1" stop-color="#050816"/></linearGradient>
+  <linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#38bdf8"/><stop offset=".5" stop-color="#2563eb"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+  <filter id="s"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-opacity=".4"/></filter>
+</defs>
+<rect width="1200" height="170" rx="24" fill="url(#b)"/>
+<g font-family="Inter,Arial,sans-serif" font-size="17" font-weight="700" fill="#eef6ff" text-anchor="middle" filter="url(#s)">
+  <g transform="translate(115 85)"><rect x="-82" y="-28" width="164" height="56" rx="28" fill="#ffffff" fill-opacity=".07" stroke="#38bdf8" stroke-opacity=".5"/><text y="6">Python / Django</text><animateTransform attributeName="transform" type="translate" values="115 85;115 76;115 85" dur="4.2s" repeatCount="indefinite"/></g>
+  <g transform="translate(305 85)"><rect x="-72" y="-28" width="144" height="56" rx="28" fill="#ffffff" fill-opacity=".07" stroke="#60a5fa" stroke-opacity=".5"/><text y="6">React / JS</text><animateTransform attributeName="transform" type="translate" values="305 85;305 94;305 85" dur="4.9s" repeatCount="indefinite"/></g>
+  <g transform="translate(485 85)"><rect x="-82" y="-28" width="164" height="56" rx="28" fill="#ffffff" fill-opacity=".07" stroke="#818cf8" stroke-opacity=".5"/><text y="6">PostgreSQL / SQL</text><animateTransform attributeName="transform" type="translate" values="485 85;485 75;485 85" dur="5.5s" repeatCount="indefinite"/></g>
+  <g transform="translate(680 85)"><rect x="-86" y="-28" width="172" height="56" rx="28" fill="#ffffff" fill-opacity=".07" stroke="#a78bfa" stroke-opacity=".5"/><text y="6">ML / LLM / Agents</text><animateTransform attributeName="transform" type="translate" values="680 85;680 95;680 85" dur="4.6s" repeatCount="indefinite"/></g>
+  <g transform="translate(880 85)"><rect x="-84" y="-28" width="168" height="56" rx="28" fill="#ffffff" fill-opacity=".07" stroke="#60a5fa" stroke-opacity=".5"/><text y="6">AWS / GCP / Azure</text><animateTransform attributeName="transform" type="translate" values="880 85;880 77;880 85" dur="5.2s" repeatCount="indefinite"/></g>
+  <g transform="translate(1070 85)"><rect x="-88" y="-28" width="176" height="56" rx="28" fill="#ffffff" fill-opacity=".07" stroke="#38bdf8" stroke-opacity=".5"/><text y="6">Docker / CI-CD</text><animateTransform attributeName="transform" type="translate" values="1070 85;1070 94;1070 85" dur="4.4s" repeatCount="indefinite"/></g>
+</g>
+<rect x="50" y="145" width="1100" height="3" rx="1.5" fill="#0b2545"/>
+<rect x="50" y="145" width="240" height="3" rx="1.5" fill="url(#g)"><animate attributeName="x" values="50;910;50" dur="8s" repeatCount="indefinite"/></rect>
+</svg>
