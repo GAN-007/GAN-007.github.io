@@ -131,7 +131,7 @@ GAN-007
 
 <br/>
 
-<img src="https://github-profile-trophy.vercel.app/?username=GAN-007&theme=algolia&no-frame=true&no-bg=true&margin-w=8&row=1&column=6" alt="GAN-007 GitHub trophies" />
+<img src="https://raw.githubusercontent.com/GAN-007/GAN-007/main/assets/engineering-signal.svg" width="100%" alt="GAN-007 engineering achievement matrix" />
 
 </div>
 
