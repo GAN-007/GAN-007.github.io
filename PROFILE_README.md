@@ -131,7 +131,7 @@ GAN-007
 
 <br/>
 
-<img src="https://raw.githubusercontent.com/GAN-007/GAN-007/main/assets/engineering-signal.svg" width="100%" alt="GAN-007 engineering achievement matrix" />
+<img src="https://raw.githubusercontent.com/GAN-007/GAN-007/main/assets/engineering-signal-v2.svg" width="100%" alt="GAN-007 engineering achievement matrix" />
 
 </div>
 
