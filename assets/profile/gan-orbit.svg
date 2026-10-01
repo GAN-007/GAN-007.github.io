@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+<title id="title">GAN-TECH animated engineering data and AI banner</title>
+<desc id="desc">Glossy animated three-dimensional orbital interface for George Alfred Nyamema.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#030712"/>
+    <stop offset=".45" stop-color="#07182f"/>
+    <stop offset="1" stop-color="#020617"/>
+  </linearGradient>
+  <radialGradient id="orb" cx=".34" cy=".28" r=".72">
+    <stop offset="0" stop-color="#f8fbff"/>
+    <stop offset=".18" stop-color="#8be9ff"/>
+    <stop offset=".48" stop-color="#2f7cff"/>
+    <stop offset=".78" stop-color="#5b21b6"/>
+    <stop offset="1" stop-color="#15032e"/>
+  </radialGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ffffff" stop-opacity=".24"/>
+    <stop offset=".5" stop-color="#93c5fd" stop-opacity=".08"/>
+    <stop offset="1" stop-color="#7c3aed" stop-opacity=".18"/>
+  </linearGradient>
+  <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#38bdf8"/>
+    <stop offset="1" stop-color="#a78bfa"/>
+  </linearGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="10" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+    <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity=".55"/>
+  </filter>
+</defs>
+<rect width="1200" height="420" rx="28" fill="url(#bg)"/>
+<g opacity=".22">
+  <path d="M0 70H1200M0 140H1200M0 210H1200M0 280H1200M0 350H1200" stroke="#60a5fa" stroke-width=".7"/>
+  <path d="M100 0V420M200 0V420M300 0V420M400 0V420M500 0V420M600 0V420M700 0V420M800 0V420M900 0V420M1000 0V420M1100 0V420" stroke="#60a5fa" stroke-width=".45"/>
+</g>
+<g transform="translate(90 60)">
+  <rect x="0" y="0" width="640" height="300" rx="30" fill="url(#glass)" stroke="#60a5fa" stroke-opacity=".36" filter="url(#shadow)"/>
+  <rect x="20" y="20" width="600" height="260" rx="22" fill="#04111f" fill-opacity=".72" stroke="#ffffff" stroke-opacity=".08"/>
+  <circle cx="54" cy="49" r="6" fill="#22d3ee"><animate attributeName="opacity" values=".35;1;.35" dur="2.1s" repeatCount="indefinite"/></circle>
+  <circle cx="76" cy="49" r="6" fill="#8b5cf6"><animate attributeName="opacity" values="1;.35;1" dur="2.6s" repeatCount="indefinite"/></circle>
+  <circle cx="98" cy="49" r="6" fill="#2563eb"/>
+  <text x="42" y="105" fill="#93c5fd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" letter-spacing="3">GAN-TECH // SYSTEM PROFILE</text>
+  <text x="42" y="156" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="34">GEORGE ALFRED NYAMEMA</text>
+  <text x="42" y="198" fill="url(#cyan)" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="22">Engineering · Data · AI · Automation</text>
+  <text x="42" y="236" fill="#cbd5e1" font-family="Inter,Arial,sans-serif" font-size="16">I build production systems that turn complexity into measurable outcomes.</text>
+  <rect x="42" y="253" width="205" height="5" rx="2.5" fill="#0f2740"/>
+  <rect x="42" y="253" width="120" height="5" rx="2.5" fill="url(#cyan)">
+    <animate attributeName="width" values="80;205;120;205;80" dur="6s" repeatCount="indefinite"/>
+  </rect>
+</g>
+<g transform="translate(870 210)" filter="url(#glow)">
+  <ellipse rx="160" ry="62" fill="none" stroke="#38bdf8" stroke-opacity=".6" stroke-width="2" transform="rotate(-18)">
+    <animateTransform attributeName="transform" type="rotate" values="-18;-378" dur="14s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse rx="126" ry="112" fill="none" stroke="#8b5cf6" stroke-opacity=".46" stroke-width="2" transform="rotate(38)">
+    <animateTransform attributeName="transform" type="rotate" values="38;398" dur="20s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle r="88" fill="url(#orb)" filter="url(#shadow)">
+    <animate attributeName="r" values="84;90;84" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <ellipse cx="-25" cy="-32" rx="34" ry="18" fill="#fff" opacity=".28" transform="rotate(-28)"/>
+  <circle cx="155" cy="-14" r="9" fill="#67e8f9">
+    <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="-116" cy="-76" r="7" fill="#c4b5fd">
+    <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="11s" repeatCount="indefinite"/>
+  </circle>
+</g>
+<g font-family="ui-monospace,monospace" font-size="13" fill="#93c5fd">
+  <text x="790" y="72">PYTHON</text><text x="1005" y="95">POSTGRESQL</text>
+  <text x="1032" y="330">CLOUD</text><text x="760" y="350">LLM / ML</text>
+</g>
+<path d="M785 82C835 105 845 120 858 144M1011 105C977 126 954 140 935 155M1025 320C993 299 970 282 948 265M790 340C816 308 832 286 845 270" stroke="#38bdf8" stroke-opacity=".34" stroke-width="1.5" stroke-dasharray="5 8">
+  <animate attributeName="stroke-dashoffset" values="0;-52" dur="4s" repeatCount="indefinite"/>
+</path>
+</svg>
